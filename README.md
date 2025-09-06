@@ -5,15 +5,15 @@
 → 필요시 2로 회귀하여 품질이 개선될 때까지 반복
 
 ## Design Rationale
-1) Define
+### 1) Define
 Anthropic에서 공개한 프롬프트 작성 가이드라인을 참고하여, 목표를 구체화하고 기본적인 제약조건을 포함하는 초안 프롬프트를 자동으로 작성합니다.
 '명확한 지시사항, 구체적 제약, 원하는 출력 형식, 평가 기준'을 빠짐없이 포함하는 것을 목표로 합니다.
 
-2) Edit
+### 2) Edit
 블록 기반 편집과 버전 히스토리 개념을 차용했습니다. 사용자가 직접 라인 단위로 프롬프트를 다듬으며, 버전 관리 및 산출물 기록을 통해 점진적 개선 과정을 지원합니다.
 프롬프팅은 단어 하나의 뉘앙스, 연관 토큰의 선택에 따라서도 출력이 크게 달라질 수 있기 때문에, 수정 사항을 라인 단위로 쪼개어 기록하는 방식을 채택했습니다. 이를 통해 작은 변화가 산출물에 어떤 영향을 주는지 추적할 수 있고, 점진적 개선 과정을 데이터로 남길 수 있습니다.  
 
-3) Eval  
+### 3) Eval  
 OpenAI에서 제시한 메타 프롬프트를 활용하여 프롬프트 품질을 점검합니다.  
 Anthropic 가이드라인에서 제시한 평가 기준(명확성, 구체성, 일관성, 제약조건 충족, 금지사항 준수)을 체크리스트화했습니다.  
 추가적으로 정량적 지표(BLEU, F1, Distinct, 응답 지연시간)를 계산하고,  
@@ -24,22 +24,23 @@ Anthropic 가이드라인에서 제시한 평가 기준(명확성, 구체성, �
 
 
 # 구조
+
 sparkling/
- ┣ src/                  # Core
- ┃ ┣ storage.py         
- ┃ ┣ roles.py            
- ┃ ┣ api.py              # OpenAI API 연동(호출, 지연시간 측정)
- ┃ ┣ meta.py             # 메타 프롬프팅(출력 자체 점검/개선)
- ┃ ┣ outputs.py          # 산출물 저장/불러오기/비교
- ┃ ┣ evals.py            # F1/BLEU/간단 성능지표
- ┃ ┗ abtest.py           # A/B 테스트 하네스(버전 비교)
- ┣ data/
- ┃ ┣ lines.jsonl         # 프롬프트 라인 버전 로그
- ┃ ┣ sessions.jsonl      # 실행 세션 메타(logs)
- ┃ ┗ refs/               # Open AI에서 제공한 예시 프롬프트
- ┣ examples/
- ┃ ┗ demo_security.yml   # 데모 시나리오(보안요약 등)
- ┣ main.py               # CLI 진입점
- ┣ web/                  # 프론트엔드 
- ┣ .env.example
- ┗ README.md
+├── src/                  # Core
+│   ├── storage.py
+│   ├── roles.py
+│   ├── api.py            # OpenAI API 연동(호출, 지연시간 측정)
+│   ├── meta.py           # 메타 프롬프팅(출력 자체 점검/개선)
+│   ├── outputs.py        # 산출물 저장/불러오기/비교
+│   ├── evals.py          # F1/BLEU/간단 성능지표
+│   └── abtest.py         # A/B 테스트 하네스(버전 비교)
+├── data/
+│   ├── lines.jsonl       # 프롬프트 라인 버전 로그
+│   ├── sessions.jsonl    # 실행 세션 메타(logs)
+│   └── refs/             # Open AI에서 제공한 예시 프롬프트
+├── examples/
+│   └── demo_security.yml # 데모 시나리오(보안요약 등)
+├── main.py               # CLI 진입점
+├── web/                  # 프론트엔드 
+├── .env.example
+└── README.md
