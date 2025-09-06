@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 
-/** ← 여기 컴포넌트 그대로 붙여 넣기 */
 function EventTimeline({ promptId }: { promptId: number }) {
   const [events, setEvents] = useState<any[]>([]);
   const load = async () => {
@@ -35,7 +34,6 @@ function EventTimeline({ promptId }: { promptId: number }) {
   );
 }
 
-/** 기존 에디터 컴포넌트 */
 export default function PromptEditor({ promptId }: { promptId: number }) {
   const [value, setValue] = useState<string>("");
 
@@ -76,7 +74,6 @@ export default function PromptEditor({ promptId }: { promptId: number }) {
         />
       </div>
 
-      {/* ← 에디터 아래에 타임라인 배치 */}
       <EventTimeline promptId={promptId} />
     </div>
   );

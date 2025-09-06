@@ -6,7 +6,6 @@ export default function RunPanel({ promptId }: { promptId: number }) {
   const [output, setOutput] = useState<string>("");
   const [lastRunId, setLastRunId] = useState<number | null>(null);
 
-  // ← 여기 네가 준 코드가 포함된 상태/함수
   const [score, setScore] = useState<string>("");
 
   const run = async () => {
@@ -25,7 +24,6 @@ export default function RunPanel({ promptId }: { promptId: number }) {
     setScore("");                      // 이전 점수 초기화
   };
 
-  // 네가 보낸 evaluate 코드 (runId를 마지막 실행 ID로 사용)
   const evaluate = async () => {
     if (lastRunId == null) return alert("먼저 Run을 실행해줘.");
     const res = await fetch(`http://localhost:8000/evals/${lastRunId}`, { method: "POST" });
