@@ -4,6 +4,7 @@ app/core/config.py
 app/core/logging.py
 app/db/base.py
 app/db/session.py
+app/db/migrations/env.py
 app/models/prompt.py
 app/routers/evals.py
 app/routers/health.py
